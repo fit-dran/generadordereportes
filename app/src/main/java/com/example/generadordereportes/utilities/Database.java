@@ -5,9 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.generadordereportes.models.Item;
 import com.example.generadordereportes.models.Room;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "reportes.db";
@@ -60,28 +62,33 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("UPDATE items SET itemName = '" + itemName + "', itemRoomCode = '" + itemRoomCode + "' WHERE itemCode = '" + itemCode + "'");
     }
 
-    public ArrayList<Room> getRooms() {
+    public List<Room> getRooms() {
+        List<Room> rooms = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        ArrayList<Room> rooms = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM rooms", null);
         if (cursor.moveToFirst()) {
             do {
-                rooms.add(new Room(cursor.getString(0), cursor.getString(1), cursor.getString(2)));
+                Room room = new Room(cursor.getString(0), cursor.getString(1), cursor.getString(2));
+                rooms.add(room);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return rooms;
     }
 
-    public ArrayList<String> getItems(String roomCode) {
+    public List<Item> getItems(String roomCode) {
+        List<Item> items = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        ArrayList<String> items = new ArrayList<>();
         Cursor cursor = db.rawQuery("SELECT * FROM items WHERE itemRoomCode = '" + roomCode + "'", null);
         if (cursor.moveToFirst()) {
             do {
-                items.add(cursor.getString(1));
+                Item item = new Item(cursor.getString(0), cursor.getString(1), cursor.getString(2));
+                items.add(item);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return items;
     }
+
 
 }
