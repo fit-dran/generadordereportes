@@ -32,9 +32,10 @@ public class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertRoom(String roomCode, String roomName, String roomDescription) {
+    public boolean insertRoom(String roomCode, String roomName, String roomDescription) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO rooms VALUES ('" + roomCode + "', '" + roomName + "', '" + roomDescription + "')");
+        return true;
     }
 
     public void insertItem(String itemCode, String itemName, String itemRoomCode) {
