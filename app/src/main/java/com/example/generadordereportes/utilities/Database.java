@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "reportes.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,7 +22,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE rooms (roomCode TEXT PRIMARY KEY, roomName TEXT, roomDescription TEXT)");
-        db.execSQL("CREATE TABLE items (itemCode TEXT PRIMARY KEY, itemName TEXT, itemRoomCode TEXT, FOREIGN KEY(itemRoomCode) REFERENCES rooms(roomCode))");
+        db.execSQL("CREATE TABLE items (itemCode TEXT, itemName TEXT, itemRoomCode TEXT, FOREIGN KEY(itemRoomCode) REFERENCES rooms(roomCode))");
     }
 
     @Override
@@ -122,5 +122,16 @@ public class Database extends SQLiteOpenHelper {
         return items;
     }
 
+    public String getRoomCodeByItemCode(String itemCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM items WHERE itemCode = '" + itemCode + "'", null);
+        if (cursor.moveToFirst()) {
+            String roomCode = cursor.getString(2);
+            cursor.close();
+            return roomCode;
+        }
+        cursor.close();
+        return null;
+    }
 
 }

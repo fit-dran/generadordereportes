@@ -90,6 +90,9 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
                 builder.show();
             });
             cardView.setOnClickListener(v -> {
+                Intent intent = new Intent(itemView.getContext(), ItemListActivity.class);
+                intent.putExtra("roomCode", tvRoomCode.getText().toString());
+                itemView.getContext().startActivity(intent);
             });
         }
     }
