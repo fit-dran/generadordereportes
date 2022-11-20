@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Database extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "reportes.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 5;
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,29 +38,34 @@ public class Database extends SQLiteOpenHelper {
         return true;
     }
 
-    public void insertItem(String itemCode, String itemName, String itemRoomCode) {
+    public boolean insertItem(String itemCode, String itemName, String itemRoomCode) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("INSERT INTO items VALUES ('" + itemCode + "', '" + itemName + "', '" + itemRoomCode + "')");
+        return true;
     }
 
-    public void deleteRoom(String roomCode) {
+    public boolean deleteRoom(String roomCode) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM rooms WHERE roomCode = '" + roomCode + "'");
+        return true;
     }
 
-    public void deleteItem(String itemCode) {
+    public boolean deleteItem(String itemCode) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM items WHERE itemCode = '" + itemCode + "'");
+        return true;
     }
 
-    public void updateRoom(String roomCode, String roomName, String roomDescription) {
+    public boolean updateRoom(String roomCode, String roomName, String roomDescription) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE rooms SET roomName = '" + roomName + "', roomDescription = '" + roomDescription + "' WHERE roomCode = '" + roomCode + "'");
+        return true;
     }
 
-    public void updateItem(String itemCode, String itemName, String itemRoomCode) {
+    public boolean updateItem(String itemCode, String itemName, String itemRoomCode) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE items SET itemName = '" + itemName + "', itemRoomCode = '" + itemRoomCode + "' WHERE itemCode = '" + itemCode + "'");
+        return true;
     }
 
     public List<Room> getRooms() {
@@ -81,6 +86,32 @@ public class Database extends SQLiteOpenHelper {
         List<Item> items = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM items WHERE itemRoomCode = '" + roomCode + "'", null);
+        if (cursor.moveToFirst()) {
+            do {
+                Item item = new Item(cursor.getString(0), cursor.getString(1), cursor.getString(2));
+                items.add(item);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return items;
+    }
+
+    public Room getRoomByCode(String roomCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM rooms WHERE roomCode = '" + roomCode + "'", null);
+        if (cursor.moveToFirst()) {
+            Room room = new Room(cursor.getString(0), cursor.getString(1), cursor.getString(2));
+            cursor.close();
+            return room;
+        }
+        cursor.close();
+        return null;
+    }
+
+    public List<Item> getItemsByCode(String roomCode) {
+        List<Item> items = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM items WHERE itemCode = '" + roomCode + "'", null);
         if (cursor.moveToFirst()) {
             do {
                 Item item = new Item(cursor.getString(0), cursor.getString(1), cursor.getString(2));

@@ -54,14 +54,18 @@ public class AddRoomActivity extends AppCompatActivity {
             String roomDescription = etRoomDescription.getText().toString();
             if (roomName.isEmpty() || roomCode.isEmpty() || roomDescription.isEmpty()) {
                 Toast.makeText(AddRoomActivity.this, "Complete todos los campos", Toast.LENGTH_SHORT).show();
+            }
+            if (db.getRoomByCode(roomCode) != null) {
+                Toast.makeText(AddRoomActivity.this, "Ya existe una habitación con ese código", Toast.LENGTH_SHORT).show();
             } else {
-                if (db.insertRoom(roomName, roomCode, roomDescription)) {
-                    Toast.makeText(AddRoomActivity.this, "Aula agregada", Toast.LENGTH_SHORT).show();
+                if (db.insertRoom(roomCode, roomName, roomDescription )) {
+                    Toast.makeText(AddRoomActivity.this, "Habitación agregada", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(AddRoomActivity.this, "Error al agregar aula", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddRoomActivity.this, "Error al agregar habitación", Toast.LENGTH_SHORT).show();
                 }
             }
+            //TODO: Mejorar if nesting
         });
         fabRoomScanBarCode = findViewById(R.id.fabRoomScanBarCode);
         fabRoomScanBarCode.setOnClickListener(v -> scanBarcodeCustomLayout());

@@ -30,5 +30,3 @@ r
 Bapp/src/main/java/com/example/generadordereportes/models/Room.java,9\6\9685ed39830b231e1bd1f380a37ccfe4d0dc9abd
 @
 app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
-‚
-Rapp/src/main/java/com/example/generadordereportes/activities/RoomListActivity.java,1\6\1696da75269c4cd12cc3df55112caaa5146222a2

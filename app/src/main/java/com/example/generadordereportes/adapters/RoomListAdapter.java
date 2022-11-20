@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -69,7 +70,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
             cardView = itemView.findViewById(R.id.cardView);
             btnEditRoom.setOnClickListener(v -> {
                 Intent intent = new Intent(itemView.getContext(), EditRoomActivity.class);
-                intent.putExtra("room", tvRoomCode.getText().toString());
+                intent.putExtra("roomCode", tvRoomCode.getText().toString());
                 itemView.getContext().startActivity(intent);
             });
             btnDeleteRoom.setOnClickListener(v -> {
@@ -77,17 +78,18 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
                 builder.setTitle("Eliminar dependencia");
                 builder.setMessage("¿Está seguro de que desea eliminar esta dependencia?");
                 builder.setPositiveButton("Sí", (dialog, which) -> {
-                    db.deleteRoom(tvRoomCode.getText().toString());
-                    Intent intent = new Intent(itemView.getContext(), RoomListActivity.class);
-                    itemView.getContext().startActivity(intent);
+                    if (db.deleteRoom(tvRoomCode.getText().toString())) {
+                        Toast.makeText(itemView.getContext(), "Dependencia eliminada", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(itemView.getContext(), RoomListActivity.class);
+                        itemView.getContext().startActivity(intent);
+                    } else {
+                        Toast.makeText(itemView.getContext(), "Error al eliminar dependencia", Toast.LENGTH_SHORT).show();
+                    }
                 });
                 builder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
                 builder.show();
             });
             cardView.setOnClickListener(v -> {
-                Intent intent = new Intent(itemView.getContext(), ItemListActivity.class);
-                intent.putExtra("room", tvRoomCode.getText().toString());
-                itemView.getContext().startActivity(intent);
             });
         }
     }
