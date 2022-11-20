@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.generadordereportes.R;
+import com.example.generadordereportes.activities.EditItemActivity;
 import com.example.generadordereportes.activities.ItemListActivity;
 import com.example.generadordereportes.models.Item;
 import com.example.generadordereportes.utilities.Database;
@@ -62,9 +63,9 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
             btnEditItem = itemView.findViewById(R.id.btnEditItem);
             cardView = itemView.findViewById(R.id.cardView);
             btnEditItem.setOnClickListener(v -> {
-//                Intent intent = new Intent(itemView.getContext(), EditItemActivity.class);
-//                intent.putExtra("item_id", tvItemCode.getText().toString());
-//                itemView.getContext().startActivity(intent);
+                Intent intent = new Intent(itemView.getContext(), EditItemActivity.class);
+                intent.putExtra("itemCode", tvItemCode.getText().toString());
+                itemView.getContext().startActivity(intent);
             });
             btnDeleteItem.setOnClickListener(v -> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(itemView.getContext());

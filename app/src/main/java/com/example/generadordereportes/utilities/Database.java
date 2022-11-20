@@ -134,4 +134,15 @@ public class Database extends SQLiteOpenHelper {
         return null;
     }
 
+    public Item getItemByCode(String itemCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM items WHERE itemCode = '" + itemCode + "'", null);
+        if (cursor.moveToFirst()) {
+            Item item = new Item(cursor.getString(0), cursor.getString(1), cursor.getString(2));
+            cursor.close();
+            return item;
+        }
+        cursor.close();
+        return null;
+    }
 }
