@@ -20,6 +20,7 @@ public class ItemListActivity extends AppCompatActivity {
     TextView tvRoomName;
     RecyclerView recyclerView;
     Button btnAddItem;
+    Button btnCreateReport;
 
 
     @Override
@@ -30,6 +31,7 @@ public class ItemListActivity extends AppCompatActivity {
         tvRoomName = findViewById(R.id.tvRoomName);
         recyclerView = findViewById(R.id.recyclerView);
         btnAddItem = findViewById(R.id.btnAddItem);
+        btnCreateReport = findViewById(R.id.btnCreateReport);
         Intent intent = getIntent();
         String roomCode = intent.getStringExtra("roomCode");
         tvRoomName.setText(db.getRoomByCode(roomCode).getRoomCode());
@@ -41,6 +43,11 @@ public class ItemListActivity extends AppCompatActivity {
             Intent addItemIntent = new Intent(this, AddItemActivity.class);
             addItemIntent.putExtra("roomCode", roomCode);
             startActivity(addItemIntent);
+        });
+        btnCreateReport.setOnClickListener(v -> {
+            Intent createReportIntent = new Intent(this, CreateReportActivity.class);
+            createReportIntent.putExtra("roomCode", roomCode);
+            startActivity(createReportIntent);
         });
 
 

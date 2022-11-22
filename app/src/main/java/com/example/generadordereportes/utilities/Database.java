@@ -111,7 +111,7 @@ public class Database extends SQLiteOpenHelper {
     public List<Item> getItemsByCode(String roomCode) {
         List<Item> items = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM items WHERE itemCode = '" + roomCode + "'", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM items WHERE itemRoomCode = '" + roomCode + "'", null);
         if (cursor.moveToFirst()) {
             do {
                 Item item = new Item(cursor.getString(0), cursor.getString(1), cursor.getString(2));
