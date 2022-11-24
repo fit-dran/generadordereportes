@@ -62,7 +62,8 @@ public class CreateReportActivity extends AppCompatActivity {
     }
 
     private void createReport(Room room, List<Item> itemList,String email) throws FileNotFoundException {
-        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString();
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()+"/"+email+"/" + room.getRoomName();
+        Log.d("path", path);
         File dir = new File(path);
         if (!dir.exists()) {
             dir.mkdirs();

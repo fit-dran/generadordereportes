@@ -42,3 +42,11 @@ Rapp/src/main/java/com/example/generadordereportes/activities/EditRoomActivity.j
 Qapp/src/main/java/com/example/generadordereportes/activities/AddItemActivity.java,b\e\be1346eb2ca4165ea63da5c9af548d10bbe76a6a
 ‚
 Rapp/src/main/java/com/example/generadordereportes/activities/EditItemActivity.java,3\0\30d8bee165c78080e5b4d9cf2a8c3bcf30c3cbf6
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+‚
+Rapp/src/main/java/com/example/generadordereportes/activities/ItemListActivity.java,6\3\636cf2eb3e0fd62ba4070f081bd1a2ebf5bad505
+@
+app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
+<
+build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
